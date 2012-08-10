@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  div#error= error
+  form(method='post')
+      label Nombre
+      input(type='text', name="name")
+      label email
+      input(type='text', name='email')
+      input(type='submit', value='Suscribir')
+   ul#emails
+      if(typeof(subscriptors) != "undefined")
+         each item in subscriptors
+            li 
+               div.text
+                  span #{item.name} - #{item.email}
+                  a.edit(href='#') Editar | 
+                  a.delete(href='#') Eliminar
+               form.edit.hidden(method='post', action='/save')
+                  input(type='hidden', name='id', value='#{item._id}')
+                  input(type='text', name='name', value='#{item.name}')
+                  input(type='text', name='email', value='#{item.email}')
+                  a.save(href='#') Guardar
+                  small
+                     a.cancel(href="#") Cancelar
